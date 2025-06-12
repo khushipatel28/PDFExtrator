@@ -1,0 +1,45 @@
+﻿@model pdf1.Models.PdfModel
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PDF Processing</title>
+</head>
+<body>
+    <h1>Upload PDF</h1>
+
+    <form asp-action="Upload" method="post" enctype="multipart/form-data">
+        <input type="file" name="PdfFile" />
+        <button type="submit">Upload</button>
+    </form>
+
+    @if (Model != null && !string.IsNullOrEmpty(Model.ExtractedText))
+    {
+        <h2>Extracted Text:</h2>
+        <pre>@Model.ExtractedText</pre>
+
+        <h2>API Response:</h2>
+        <pre>@Model.ApiResponse</pre>
+    }
+
+    <form asp-action="UploadFromUrl" method="post" enctype="multipart/form-data">
+        <input type="url" name="PdfUrl" />
+        <button type="submit">Upload</button>
+    </form>
+
+    @* @if (Model != null && !string.IsNullOrEmpty(Model.ExtractedText) && !string.IsNullOrEmpty(Model.ApiResponse))
+    {
+    <hr />
+    <h2>Extracted Text</h2>
+    <p>@Model.ExtractedText</p>
+
+    <h2>API Response</h2>
+    <p>@Model.ApiResponse</p>
+
+    <a href="@Url.Action("CallOpenAI", new { content = Model.ExtractedText })" class="btn btn-primary">Get AI Response</a>
+    }
+    *@
+</body>
+</html>

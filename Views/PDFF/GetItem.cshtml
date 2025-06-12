@@ -1,0 +1,276 @@
+﻿@* @model pdf1.Models.ResourceDetail
+
+@{
+    ViewData["Title"] = "Parsed Resume Data";
+}
+
+<h2>Parsed Resume Data</h2>
+
+<div>
+    <h3>Personal Information</h3>
+    <p><strong>First Name:</strong> @Model.FirstName</p>
+    <p><strong>Last Name:</strong> @Model.LastName</p>
+    <p><strong>Email:</strong> @Model.Email</p>
+    <p><strong>Phone Number:</strong> @Model.PhoneNumber</p>
+    <p><strong>Country:</strong> @Model.Country</p>
+    <p><strong>State:</strong> @Model.State</p>
+    <p><strong>City:</strong> @Model.City</p>
+    <p><strong>Zip Code:</strong> @Model.ZipCode</p>
+    <p><strong>Address Line 1:</strong> @Model.AddressLine1</p>
+    <p><strong>Address Line 2:</strong> @Model.AddressLine2</p>
+    <p><strong>LinkedIn URL:</strong> @Model.LinkedInUrl</p>
+    <p><strong>Years of Experience:</strong> @Model.YearOfExperience</p>
+    <p><strong>About Me:</strong> @Model.AboutMe</p>
+</div>
+
+<div>
+    <h3>Education</h3>
+    @foreach (var edu in Model.edu)
+    {
+        <div>
+            <p><strong>University:</strong> @edu.UniversityName</p>
+            <p><strong>Degree:</strong> @edu.Degree</p>
+            <p><strong>Course:</strong> @edu.Course</p>
+            <p><strong>Start Date:</strong> @edu.StartMonthYear</p>
+            <p><strong>End Date:</strong> @edu.EndMonthYear</p>
+            <p><strong>Country:</strong> @edu.Country</p>
+            <p><strong>Description:</strong> @edu.Description</p>
+        </div>
+    }
+    }
+
+    <div>
+        <h3>Experience</h3>
+        @foreach (var exp in Model.exp)
+        {
+            <div>
+                <p><strong>Company:</strong> @exp.CompanyName</p>
+                <p><strong>Designation:</strong> @exp.Designation</p>
+                <p><strong>Start Date:</strong> @exp.StartDate</p>
+                <p><strong>End Date:</strong> @exp.EndDate</p>
+                <p><strong>Description:</strong> @exp.Description</p>
+            </div>
+        }
+    </div>
+
+    <div>
+        <h3>Projects</h3>
+        @foreach (var pro in Model.pro)
+        {
+            <div>
+                <p><strong>Project Name:</strong> @pro.ProjectName</p>
+                <p><strong>Designation:</strong> @pro.Designation</p>
+                <p><strong>Start Date:</strong> @pro.StartDate</p>
+                <p><strong>End Date:</strong> @pro.EndDate</p>
+                <p><strong>Description:</strong> @pro.Description</p>
+            </div>
+        }
+    </div>
+
+    <div>
+        <h3>Certificates</h3>
+        @foreach (var cer in Model.cer)
+        {
+            <div>
+                <p><strong>Name:</strong> @cer.Name</p>
+                <p><strong>Provider:</strong> @cer.Provider</p>
+                <p><strong>Date:</strong> @cer.Date</p>
+                <p><strong>Certificate URL:</strong> @cer.CertificateUrl</p>
+                <p><strong>Description:</strong> @cer.Description</p>
+            </div>
+        }
+    </div>
+ *@
+
+
+@* @model IEnumerable<pdf1.Models.ResourceDetail>
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Resource Details</title>
+</head>
+<body>
+    <h1>Resource Details</h1>
+    <div class="col-6">
+        <input type="text" placeholder="Search here..." id="txtSearch" class="form-control m-1 float-end" style="width:50%;" />
+    </div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Email</th>
+                <th>Phone Number</th>
+                <th>Country</th>
+                <th>State</th>
+                <th>City</th>
+                <th>Zip Code</th>
+                <th>Address Line 1</th>
+                <th>Address Line 2</th>
+                <th>LinkedIn URL</th>
+                <th>Years of Experience</th>
+                <th>About Me</th>
+                <th>Educations</th>
+                <th>Experiences</th>
+                <th>Projects</th>
+                <th>Certificates</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var resource in Model)
+            {
+                <tr>
+                    <td>@resource.FirstName</td>
+                    <td>@resource.LastName</td>
+                    <td>@resource.Email</td>
+                    <td>@resource.PhoneNumber</td>
+                    <td>@resource.Country</td>
+                    <td>@resource.State</td>
+                    <td>@resource.City</td>
+                    <td>@resource.ZipCode</td>
+                    <td>@resource.AddressLine1</td>
+                    <td>@resource.AddressLine2</td>
+                    <td><a href="@resource.LinkedInUrl">@resource.LinkedInUrl</a></td>
+                    <td>@resource.YearOfExperience</td>
+                    <td>@resource.AboutMe</td>
+                    <td>
+                        <ul>
+                            @foreach (var edu in resource.edu)
+                            {
+                                <li>@edu.UniversityName, @edu.Degree, @edu.Course, @edu.StartMonthYear - @edu.EndMonthYear</li>
+                            }
+                        </ul>
+                    </td>
+                    <td>
+                        <ul>
+                            @foreach (var exp in resource.exp)
+                            {
+                                <li>@exp.CompanyName, @exp.Designation, @exp.StartDate - @exp.EndDate</li>
+                            }
+                        </ul>
+                    </td>
+                    <td>
+                        <ul>
+                            @foreach (var pro in resource.pro)
+                            {
+                                <li>@pro.ProjectName, @pro.Designation, @pro.StartDate - @pro.EndDate</li>
+                            }
+                        </ul>
+                    </td>
+                    <td>
+                        <ul>
+                            @foreach (var cer in resource.cer)
+                            {
+                                <li>@cer.Name, @cer.Provider, @cer.Date, @cer.CertificateUrl</li>
+                            }
+                        </ul>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</body>
+</html> *@
+
+@* @model IEnumerable<pdf1.Models.ResourceDetail> *@
+    @model pdf1.Models.ResourceDetail
+
+@* @foreach (var item in Model)
+{ *@
+
+@* <div class="col-6">
+        <input type="text" placeholder="Search here..." id="txtSearch" class="form-control m-1 float-end" style="width:50%;" />
+    </div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>First Name</th>
+                <th>Last Name</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var resource in Model)
+            {
+                <tr>
+                    <td>@resource.FirstName</td>
+                    <td>@resource.LastName</td>
+                <td> <button class="show-details-btn" data-id="@resource.Id">Show Details</button></td>
+
+                </tr>
+            <div class="details-container" id="details-container-@resource.Id" style="display:none;"></div>
+            }
+        </tbody>
+    </table> *@
+@* } *@
+
+
+<div class="sidebar">
+    <h4>Skills</h4>
+    <ul>
+        @foreach (var s in Model.ski)
+        {
+            <li>
+                <input type="checkbox" name="Skills" value="@s.SId" id="Skills-@s.SId" />
+                <label for="Skills-@s.SId">@s.Skills</label>
+            </li>
+        }
+    </ul>
+</div>
+
+<div class="main">
+    <h2>Information</h2>
+    <ul id="info">
+        @foreach (var i in Model.FirstName)
+        {
+            <li>@i.ToString()</li>
+        }
+    </ul>
+</div>
+@section Scripts {
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $('input[type="checkbox"][name="Skills"]').on('change', function () {
+            var selectedItems = $('input[type="checkbox"][name="Skills"]:checked').map(function () {
+                return $(this).val();
+            }).get();
+
+            $.ajax({
+                url: '@Url.Action("GetItem", "PDFF")',
+                type: 'POST',
+                dataType: 'html',
+                data: {
+                    SkillsIds: selectedItems
+                },
+                success: function (result) {
+                    $('#info').html(result);
+                },
+                error: function () {
+                    console.log('error');
+                }
+            });
+        });
+        @* <script>
+        $(document).ready(function () {
+        $('.show-details-btn').click(function () {
+        var id = $(this).data('id');
+        var container = $('#details-container-' + id);
+
+        if (container.is(':empty')) {
+        $.get('@Url.Action("DetailsPartial", "PDFF")', { id: id }, function (data) {
+        container.html(data);
+        container.slideToggle();
+        });
+        } else {
+        container.slideToggle();
+        }
+        });
+        });
+        </script> *@
+            <script src="/js/CustomJs.js" ></script>
+}
+
+@* @section scripts{
+    <script src="/js/CustomJs.js"></script>
+}
+ *@

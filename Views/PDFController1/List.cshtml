@@ -1,0 +1,528 @@
+﻿@* <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DataTables Example</title>
+    <!-- DataTables CSS -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.css">
+    <!-- jQuery -->
+    <script type="text/javascript" charset="utf8" src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <!-- DataTables JS -->
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.js"></script>
+</head>
+<body>
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">DataTables Example</h6>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>First Name</th>
+                            <th>Last Name</th>
+                            <th>Email</th>
+                            <th>Phone Number</th>
+                            <th>Country</th>
+                            <th>State</th>
+                            <th>City</th>
+                            <th>Zip Code</th>
+                            <th>Address Line 1</th>
+                            <th>Address Line 2</th>
+                            <th>LinkedIn URL</th>
+                            <th>Years of Experience</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var resource in Model)
+                        {
+                            <tr>
+                                <td>@resource.FirstName</td>
+                                <td>@resource.LastName</td>
+                                <td>@resource.Email</td>
+                                <td>@resource.PhoneNumber</td>
+                                <td>@resource.Country</td>
+                                <td>@resource.State</td>
+                                <td>@resource.City</td>
+                                <td>@resource.ZipCode</td>
+                                <td>@resource.AddressLine1</td>
+                                <td>@resource.AddressLine2</td>
+                                <td><a href="@resource.LinkedInUrl" target="_blank">@resource.LinkedInUrl</a></td>
+                                <td>@resource.YearOfExperience</td>
+                                <td><button class="show-details-btn" data-id="@resource.Id">Show Details</button></td>
+                            </tr>
+                            <div class="details-container" id="details-container-@resource.Id" style="display:none;"></div>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Initialize DataTables -->
+    <script>
+        $(document).ready(function () {
+            $('#dataTable').DataTable({
+                "paging": true,
+                "searching": true,
+                "ordering": true,
+                "info": true
+            });
+        });
+
+        // Show details button click handler
+        $(document).on('click', '.show-details-btn', function () {
+            var id = $(this).data('id');
+            var detailsContainer = $('#details-container-' + id);
+            if (detailsContainer.is(':visible')) {
+                detailsContainer.hide();
+            } else {
+                detailsContainer.show();
+                // Load details content dynamically if needed
+            }
+        });
+    </script>id="employeeTable"
+</body>
+</html>
+ *@
+
+
+<!DOCTYPE html>
+@* <html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee Table</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 1em;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+            th.sortable:hover {
+                cursor: pointer;
+                background-color: #ddd;
+            }
+
+        .pagination {
+            display: flex;
+            justify-content: center;
+            margin: 1em 0;
+        }
+
+            .pagination button {
+                margin: 0 5px;
+                padding: 5px 10px;
+                border: 1px solid #ddd;
+                background-color: #f2f2f2;
+                cursor: pointer;
+            }
+
+                .pagination button.active {
+                    background-color: #ddd;
+                }
+
+                .pagination button:hover {
+                    background-color: #ccc;
+                }
+    </style>
+</head>
+<body>
+    <div>
+        <label for="entriesPerPage">Entries per page:</label>
+        <select id="entriesPerPage" onchange="changeEntriesPerPage()">
+            <option value="10">10</option>
+            <option value="25">25</option>
+            <option value="50">50</option>
+            <option value="100">100</option>
+        </select>
+        <input type="text" id="searchInput" onkeyup="searchTable()" placeholder="Search for names..">
+    </div>
+    <table id="employeeTable" >
+        <thead>
+            <tr>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Email</th>
+                <th>Phone Number</th>
+                <th>Country</th>
+                <th>State</th>
+                <th>City</th>
+                <th>Zip Code</th>
+                <th>Address Line 1</th>
+                <th>Address Line 2</th>
+                <th>LinkedIn URL</th>
+                <th>Years of Experience</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var resource in Model)
+            {
+                <tr>
+                    <td>@resource.FirstName</td>
+                    <td>@resource.LastName</td>
+                    <td>@resource.Email</td>
+                    <td>@resource.PhoneNumber</td>
+                    <td>@resource.Country</td>
+                    <td>@resource.State</td>
+                    <td>@resource.City</td>
+                    <td>@resource.ZipCode</td>
+                    <td>@resource.AddressLine1</td>
+                    <td>@resource.AddressLine2</td>
+                    <td><a href="@resource.LinkedInUrl" target="_blank">@resource.LinkedInUrl</a></td>
+                    <td>@resource.YearOfExperience</td>
+
+                </tr>
+
+            }
+        </tbody>
+    </table>
+    <div class="pagination" id="pagination">
+        <button onclick="previousPage()">«</button>
+        <button class="active" onclick="goToPage(1)">1</button>
+        <button onclick="goToPage(2)">2</button>
+        <button onclick="goToPage(3)">3</button>
+        <button onclick="goToPage(4)">4</button>
+        <button onclick="goToPage(5)">5</button>
+        <button onclick="goToPage(6)">6</button>
+        <button onclick="nextPage()">»</button>
+    </div>
+    <script>
+        let currentPage = 1;
+        let entriesPerPage = 10;
+        const table = document.getElementById('employeeTable');
+        const tbody = table.getElementsByTagName('tbody')[0];
+        const pagination = document.getElementById('pagination');
+        const rows = Array.from(tbody.getElementsByTagName('tr'));
+
+        function displayTable() {
+            const start = (currentPage - 1) * entriesPerPage;
+            const end = start + entriesPerPage;
+            rows.forEach((row, index) => {
+                row.style.display = index >= start && index < end ? '' : 'none';
+            });
+        }
+
+        function changeEntriesPerPage() {
+            entriesPerPage = parseInt(document.getElementById('entriesPerPage').value);
+            currentPage = 1;
+            displayTable();
+        }
+
+        function goToPage(page) {
+            currentPage = page;
+            displayTable();
+            updatePagination();
+        }
+
+        function previousPage() {
+            if (currentPage > 1) {
+                currentPage--;
+                displayTable();
+                updatePagination();
+            }
+        }
+
+        function nextPage() {
+            if (currentPage < Math.ceil(rows.length / entriesPerPage)) {
+                currentPage++;
+                displayTable();
+                updatePagination();
+            }
+        }
+
+        function updatePagination() {
+            const totalPages = Math.ceil(rows.length / entriesPerPage);
+            pagination.innerHTML = `<button onclick="previousPage()">«</button>`;
+            for (let i = 1; i <= totalPages; i++) {
+                pagination.innerHTML += `<button class="${i === currentPage ? 'active' : ''}" onclick="goToPage(${i})">${i}</button>`;
+            }
+            pagination.innerHTML += `<button onclick="nextPage()">»</button>`;
+        }
+
+        function sortTable(n) {
+            const rowsArray = Array.from(rows);
+            let sortedRows;
+            const header = table.getElementsByTagName('th')[n];
+            const ascending = !header.classList.contains('ascending');
+            header.classList.toggle('ascending', ascending);
+            header.classList.toggle('descending', !ascending);
+
+            if (n === 3) {
+                sortedRows = rowsArray.sort((a, b) => {
+                    const aValue = parseInt(a.getElementsByTagName('td')[n].innerText);
+                    const bValue = parseInt(b.getElementsByTagName('td')[n].innerText);
+                    return ascending ? aValue - bValue : bValue - aValue;
+                });
+            } else {
+                sortedRows = rowsArray.sort((a, b) => {
+                    const aValue = a.getElementsByTagName('td')[n].innerText.toLowerCase();
+                    const bValue = b.getElementsByTagName('td')[n].innerText.toLowerCase();
+                    return ascending ? aValue.localeCompare(bValue) : bValue.localeCompare(aValue);
+                });
+            }
+            tbody.innerHTML = '';
+            sortedRows.forEach(row => tbody.appendChild(row));
+            displayTable();
+        }
+
+        function searchTable() {
+            const input = document.getElementById('searchInput');
+            const filter = input.value.toLowerCase();
+            rows.forEach(row => {
+                const cells = Array.from(row.getElementsByTagName('td'));
+                const matches = cells.some(cell => cell.innerText.toLowerCase().includes(filter));
+                row.style.display = matches ? '' : 'none';
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            displayTable();
+            updatePagination();
+        });
+    </script>
+</body>
+</html> *@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee Table</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 1em;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+            th.sortable:hover {
+                cursor: pointer;
+                background-color: #ddd;
+            }
+
+        .pagination {
+            display: flex;
+            justify-content: center;
+            margin: 1em 0;
+        }
+
+            .pagination button {
+                margin: 0 5px;
+                padding: 5px 10px;
+                border: 1px solid #ddd;
+                background-color: #f2f2f2;
+                cursor: pointer;
+            }
+
+                .pagination button.active {
+                    background-color: #ddd;
+                }
+
+                .pagination button:hover {
+                    background-color: #ccc;
+                }
+    </style>
+</head>
+<body>
+    <div>
+        <label for="entriesPerPage">Entries per page:</label>
+        <select id="entriesPerPage" onchange="changeEntriesPerPage()">
+            <option value="10">10</option>
+            <option value="25">25</option>
+            <option value="50">50</option>
+            <option value="100">100</option>
+        </select>
+        <input type="text" id="searchInput" onkeyup="searchTable()" placeholder="Search for names..">
+    </div>
+    <table id="employeeTable">
+        <thead>
+            <tr>
+                <th class="sortable" onclick="sortTable(0)">First Name</th>
+                <th class="sortable" onclick="sortTable(1)">Last Name</th>
+                <th class="sortable" onclick="sortTable(2)">Email</th>
+                <th class="sortable" onclick="sortTable(3)">Phone Number</th>
+                <th class="sortable" onclick="sortTable(4)">Country</th>
+                <th class="sortable" onclick="sortTable(5)">State</th>
+                <th class="sortable" onclick="sortTable(6)">City</th>
+                <th class="sortable" onclick="sortTable(7)">Zip Code</th>
+                <th class="sortable" onclick="sortTable(8)">Address Line 1</th>
+                <th class="sortable" onclick="sortTable(9)">Address Line 2</th>
+                <th class="sortable" onclick="sortTable(10)">LinkedIn URL</th>
+                <th class="sortable" onclick="sortTable(11)">Years of Experience</th>
+
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Example row: replace with actual data -->
+            @foreach (var resource in Model)
+            {
+                <tr>
+                    <td>@resource.FirstName</td>
+                    <td>@resource.LastName</td>
+                    <td>@resource.Email</td>
+                    <td>@resource.PhoneNumber</td>
+                    <td>@resource.Country</td>
+                    <td>@resource.State</td>
+                    <td>@resource.City</td>
+                    <td>@resource.ZipCode</td>
+                    <td>@resource.AddressLine1</td>
+                    <td>@resource.AddressLine2</td>
+                    <td><a href="@resource.LinkedInUrl" target="_blank">@resource.LinkedInUrl</a></td>
+                    <td>@resource.YearOfExperience</td>
+
+                </tr>
+
+            }
+        </tbody>
+    </table>
+    <div class="pagination" id="pagination">
+        <button onclick="previousPage()">«</button>
+        <button class="active" onclick="goToPage(1)">1</button>
+        <button onclick="goToPage(2)">2</button>
+        <button onclick="goToPage(3)">3</button>
+        <button onclick="goToPage(4)">4</button>
+        <button onclick="goToPage(5)">5</button>
+        <button onclick="goToPage(6)">6</button>
+        <button onclick="nextPage()">»</button>
+    </div>
+    <script>
+        let currentPage = 1;
+        let entriesPerPage = 10;
+        const table = document.getElementById('employeeTable');
+        const tbody = table.getElementsByTagName('tbody')[0];
+        const pagination = document.getElementById('pagination');
+        const rows = Array.from(tbody.getElementsByTagName('tr'));
+
+        function displayTable() {
+            const start = (currentPage - 1) * entriesPerPage;
+            const end = start + entriesPerPage;
+            rows.forEach((row, index) => {
+                row.style.display = index >= start && index < end ? '' : 'none';
+            });
+        }
+
+        function changeEntriesPerPage() {
+            entriesPerPage = parseInt(document.getElementById('entriesPerPage').value);
+            currentPage = 1;
+            displayTable();
+            updatePagination();
+        }
+
+        function goToPage(page) {
+            currentPage = page;
+            displayTable();
+            updatePagination();
+        }
+
+        function previousPage() {
+            if (currentPage > 1) {
+                currentPage--;
+                displayTable();
+                updatePagination();
+            }
+        }
+
+        function nextPage() {
+            if (currentPage < Math.ceil(rows.length / entriesPerPage)) {
+                currentPage++;
+                displayTable();
+                updatePagination();
+            }
+        }
+
+        function updatePagination() {
+            const totalPages = Math.ceil(rows.length / entriesPerPage);
+            pagination.innerHTML = `<button onclick="previousPage()">«</button>`;
+            for (let i = 1; i <= totalPages; i++) {
+                pagination.innerHTML += `<button class="${i === currentPage ? 'active' : ''}" onclick="goToPage(${i})">${i}</button>`;
+            }
+            pagination.innerHTML += `<button onclick="nextPage()">»</button>`;
+        }
+
+        function sortTable(n) {
+            const rowsArray = Array.from(rows);
+            let sortedRows;
+            const header = table.getElementsByTagName('th')[n];
+            const ascending = !header.classList.contains('ascending');
+            header.classList.toggle('ascending', ascending);
+            header.classList.toggle('descending', !ascending);
+
+            sortedRows = rowsArray.sort((a, b) => {
+                const aValue = a.getElementsByTagName('td')[n].innerText.toLowerCase();
+                const bValue = b.getElementsByTagName('td')[n].innerText.toLowerCase();
+
+                if (!isNaN(aValue) && !isNaN(bValue)) {
+                    return ascending ? aValue - bValue : bValue - aValue;
+                } else {
+                    return ascending ? aValue.localeCompare(bValue) : bValue.localeCompare(aValue);
+                }
+            });
+
+            tbody.innerHTML = '';
+            sortedRows.forEach(row => tbody.appendChild(row));
+            displayTable();
+        }
+
+        function searchTable() {
+            const input = document.getElementById('searchInput');
+            const filter = input.value.toLowerCase();
+            rows.forEach(row => {
+                const cells = Array.from(row.getElementsByTagName('td'));
+                const matches = cells.some(cell => cell.innerText.toLowerCase().includes(filter));
+                row.style.display = matches ? '' : 'none';
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('th.sortable').forEach((th, index) => {
+                th.addEventListener('click', () => sortTable(index));
+            });
+            displayTable();
+            updatePagination();
+        });
+
+        function deleteRow(button) {
+            const row = button.closest('tr');
+            row.remove();
+            displayTable();
+            updatePagination();
+        }
+    </script>
+</body>
+</html>
+
+

@@ -1,0 +1,8 @@
+﻿@model IEnumerable<pdf1.Models.ResourceDetail>
+
+<ul>
+    @foreach (var person in Model)
+    {
+        <li>@person.FirstName @person.LastName - @string.Join(", ", person.ski.Select(s => s.Skills))</li>
+    }
+</ul>

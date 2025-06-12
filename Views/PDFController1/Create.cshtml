@@ -1,0 +1,16 @@
+﻿@model pdf1.Models.CreateSkillgroupViewModel
+
+<form asp-action="Create" method="post">
+    <div class="form-group">
+        <label asp-for="Skill_group" class="control-label"></label>
+        <input asp-for="Skill_group" class="form-control" />
+        <span asp-validation-for="Skill_group" class="text-danger"></span>
+    </div>
+    <button type="submit" class="btn btn-primary">Create</button>
+</form>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

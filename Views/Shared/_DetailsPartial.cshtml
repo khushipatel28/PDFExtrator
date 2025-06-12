@@ -1,0 +1,59 @@
+﻿@model pdf1.Models.ResourceDetail
+
+@* <div>
+    @foreach (var skill in ViewBag.Skills as List<pdf1.Models.Skill>)
+    {
+        <div>
+            <input type="checkbox" name="SelectedSkills" value="@skill.Id" />
+            <label>@skill.Skills</label>
+        </div>
+    }
+</div> *@
+
+<div>
+    @foreach (var skill in Model.ski)
+    {
+        <div>
+            <input type="checkbox" name="selectedSkills" value="@skill.Skills" /> @skill.Skills
+        </div>
+    }
+</div>
+<div>
+    <h3>Education</h3>
+    <ul>
+        @foreach (var edu in Model.edu)
+        {
+            <li>@edu.UniversityName, @edu.Degree, @edu.Course, @edu.StartMonthYear - @edu.EndMonthYear</li>
+        }
+    </ul>
+</div>
+
+<div>
+    <h3>Experience</h3>
+    <ul>
+        @foreach (var exp in Model.exp)
+        {
+            <li>@exp.CompanyName, @exp.Designation, @exp.StartDate - @exp.EndDate</li>
+        }
+    </ul>
+</div>
+
+<div>
+    <h3>Projects</h3>
+    <ul>
+        @foreach (var pro in Model.pro)
+        {
+            <li>@pro.ProjectName, @pro.Designation, @pro.StartDate - @pro.EndDate</li>
+        }
+    </ul>
+</div>
+
+<div>
+    <h3>Certificates</h3>
+    <ul>
+        @foreach (var cer in Model.cer)
+        {
+            <li>@cer.Name, @cer.Provider, @cer.Date, @cer.CertificateUrl</li>
+        }
+    </ul>
+</div>
